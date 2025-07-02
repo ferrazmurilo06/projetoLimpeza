@@ -1,0 +1,49 @@
+.bubbles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: 0; /* Fica atrás do conteúdo */
+}
+
+.bubble {
+  position: absolute;
+  bottom: -100px;
+
+  /* forma perfeitamente redonda */
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+
+  /* efeito de transparência e luz */
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.1) 70%
+  );
+
+  /* contorno levemente visível e brilho */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+
+  opacity: 0.8;
+  animation: rise 12s infinite ease-in;
+}
+
+
+@keyframes rise {
+  0% {
+    transform: translateY(0) scale(0.9);
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1.1);
+    opacity: 0;
+  }
+}
