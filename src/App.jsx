@@ -2,9 +2,11 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import ShampooBanco from './ShampooBanco'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [mostrarShampoos, setMostrarShampoos] = useState(false)
 
   return (
     <>
@@ -25,6 +27,17 @@ function App() {
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
+      
+      {/* BOTÃO PARA MOSTRAR O SISTEMA DE SHAMPOOS */}
+      <div className="card">
+        <button onClick={() => setMostrarShampoos(!mostrarShampoos)}>
+          {mostrarShampoos ? '❌ Fechar' : '🧴 Abrir Sistema de Shampoos'}
+        </button>
+      </div>
+
+      {/* SISTEMA DE SHAMPOOS */}
+      {mostrarShampoos && <ShampooBanco />}
+
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
