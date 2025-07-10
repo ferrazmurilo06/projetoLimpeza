@@ -1,21 +1,44 @@
-// dentro de src/App.jsx
+// App.jsx
+import React from 'react';
+import { Routes, Route, Outlet } from 'react-router-dom';
+import Navbar from './componentes/Navbar.jsx'; // Navbar
+import Home from './pages/home.jsx';           // Home
+import CadastroPage from './pages/CadastroPage.jsx'; // página de cadastro
+import EdicaoPage from './pages/EdicaoPage.jsx';   // página de edição
+import './App.css';
 
-import Navbar from './componentes/Navbar.jsx' // 1. Importamos o seu novo componente Navbar
-import './App.css'                           // Importamos o CSS principal
-
-function App() {
+// Layout principal
+function Layout() {
   return (
-    <div className="App">
-      {/* 2. Colocamos o Navbar para ser renderizado no topo da página */}
+    <div>
       <Navbar />
-
-      {/* 3. Criamos uma área para o conteúdo principal */}
-      <main style={{ paddingTop: '80px' }}> {/* Dica importante abaixo! */}
-        <h1>Bem-vindo ao nosso App!</h1>
-        <p>Aqui aparecerá o conteúdo de cada página (a lista, o formulário, etc.)</p>
+      <main>
+        {/* espaço pra carregar a página da rota atual */}
+        <Outlet />
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+// regras da navegação
+function App() {
+  return (
+    <Routes>
+      {/* Todas as rotas dentro daqui usarão o <Layout> como base */}
+      <Route path="/" element={<Layout />}>
+
+        {/* Rota principal: mostra a Home */}
+        <Route index element={<Home />} />
+
+        {/* Rota de cadastro: mostra a CadastroPage */}
+        <Route path="cadastro" element={<CadastroPage />} />
+        
+        {/* Rota de edição: mostra a EdicaoPage */}
+        <Route path="editar/:id" element={<EdicaoPage />} />
+        
+      </Route>
+    </Routes>
+  );
+}
+
+export default App;
