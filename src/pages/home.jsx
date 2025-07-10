@@ -17,7 +17,7 @@ function Home() {
       <Box
         sx={{
           height: "100vh",
-          backgroundImage: 'url("/images/Frutiger Aero Aqua!!!.jpg")',
+          backgroundImage: 'url("/images/transferir (11).jpg")',
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",
@@ -49,7 +49,7 @@ function Home() {
               fontFamily: "'Asap', sans-serif",
             }}
           >
-            frutiger aeroooo
+            BEM-VINDO
           </Typography>
 
           <Typography

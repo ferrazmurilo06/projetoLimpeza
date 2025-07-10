@@ -4,11 +4,11 @@ import "./Navbar.css";
 function Navbar() {
   return (
     <nav className="navbar">
-      <div className="logo">Café do Amanhã</div>
+      <div className="logo">Aero-Clean</div>
       <ul className="nav-links">
-        {["Início", "Sobre Nós", "Menu", "Pedidos", "Histórias", "Contato"].map((item) => (
-          <li key={item}>{item}</li>
-        ))}
+        <li>Produtos</li>
+        <li>Cadastrar Produto</li>
+        <li>Editar Produto</li>
       </ul>
     </nav>
   );

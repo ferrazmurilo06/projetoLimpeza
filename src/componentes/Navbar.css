@@ -16,6 +16,7 @@
   font-family: 'Asap', sans-serif;
   z-index: 1000;
   flex-wrap: wrap; 
+  padding-right: 100000px;
 
 
 }
@@ -33,6 +34,8 @@
   gap: 16px; /* diminui espaço entre os itens */
   margin: 0;
   padding: 0;
+   padding-right: 50px;
+
 }
 
 
