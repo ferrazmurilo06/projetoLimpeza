@@ -1,0 +1,51 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+  font-family: 'Asap', sans-serif;
+  z-index: 1000;
+  flex-wrap: wrap; 
+  padding-right: 100000px;
+
+
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #2d3436;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap; /* permite quebrar linha se necessário */
+  gap: 16px; /* diminui espaço entre os itens */
+  margin: 0;
+  padding: 0;
+   padding-right: 50px;
+
+}
+
+
+.nav-links li {
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  color: #2d3436;
+}
+
+.nav-links li:hover {
+  color: #00cec9;
+}
