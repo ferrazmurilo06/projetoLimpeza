@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import { Grid, Card, CardContent, CardMedia, Typography, Button, Box } from "@mui/material";
 
 const produtos = [
@@ -59,7 +60,15 @@ function ProdutoLista() {
                 </Typography>
               </CardContent>
               <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
-                <Button variant="outlined" color="primary" size="small">Editar</Button>
+                <Button
+                  component={Link}
+                  to={`/editar/${produto.id}`}
+                  variant="outlined"
+                  color="primary"
+                  size="small"
+                >
+                   Editar
+                </Button>
                 <Button variant="outlined" color="error" size="small">Excluir</Button>
               </Box>
             </Card>
