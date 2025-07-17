@@ -1,4 +1,4 @@
-// Serviço simples para gerenciar dados dos shampoos
+
 
 class ShampooBanco {
   constructor() {

@@ -1,141 +1,201 @@
-// Serviço para gerenciar dados dos shampoos
-class ShampooService {
-  constructor() {
-    this.baseUrl = '/data/shampoos.json';
-    this.produtos = [];
-  }
+// Arquivo mockapi.js - API service para produtos
+const API_URL = 'https://687965fc63f24f1fdca1e29c.mockapi.io/data/produtos';
 
-  // Carregar produtos do JSON
-  async carregarProdutos() {
-    try {
-      const response = await fetch(this.baseUrl);
-      if (!response.ok) {
-        throw new Error('Erro ao carregar produtos');
-      }
-      const data = await response.json();
-      this.produtos = data.produtos;
-      return this.produtos;
-    } catch (error) {
-      console.error('Erro ao carregar produtos:', error);
-      // Fallback: usar dados do localStorage se existirem
-      const produtosLocal = localStorage.getItem('shampoos');
-      if (produtosLocal) {
-        this.produtos = JSON.parse(produtosLocal);
-        return this.produtos;
-      }
-      return [];
-    }
-  }
-
-  // Salvar produtos no localStorage (simula salvar no "banco")
-  salvarProdutos() {
-    localStorage.setItem('shampoos', JSON.stringify(this.produtos));
-    // Em um projeto real, aqui faria um POST/PUT para uma API
-    console.log('Produtos salvos:', this.produtos);
-  }
-
-  // Buscar todos os produtos
-  async buscarTodos() {
-    if (this.produtos.length === 0) {
-      await this.carregarProdutos();
-    }
-    return this.produtos;
-  }
-
-  // Buscar produto por ID
-  async buscarPorId(id) {
-    const produtos = await this.buscarTodos();
-    return produtos.find(produto => produto.id === parseInt(id));
-  }
-
-  // Adicionar novo produto
-  async adicionarProduto(novoProduto) {
-    const produtos = await this.buscarTodos();
-    const novoId = Math.max(...produtos.map(p => p.id), 0) + 1;
+// Função para buscar todos os produtos
+export async function buscarProdutos() {
+  try {
+    const response = await fetch(API_URL);
+    const data = await response.json();
     
-    const produto = {
-      id: novoId,
-      ...novoProduto,
-      preco: parseFloat(novoProduto.preco),
-      estoque: parseInt(novoProduto.estoque)
-    };
-
-    this.produtos.push(produto);
-    this.salvarProdutos();
-    return produto;
-  }
-
-  // Atualizar produto
-  async atualizarProduto(id, produtoAtualizado) {
-    const produtos = await this.buscarTodos();
-    const index = produtos.findIndex(produto => produto.id === parseInt(id));
-    
-    if (index === -1) {
-      throw new Error('Produto não encontrado');
-    }
-
-    this.produtos[index] = {
-      ...this.produtos[index],
-      ...produtoAtualizado,
-      id: parseInt(id),
-      preco: parseFloat(produtoAtualizado.preco),
-      estoque: parseInt(produtoAtualizado.estoque)
-    };
-
-    this.salvarProdutos();
-    return this.produtos[index];
-  }
-
-  // Remover produto
-  async removerProduto(id) {
-    const produtos = await this.buscarTodos();
-    const index = produtos.findIndex(produto => produto.id === parseInt(id));
-    
-    if (index === -1) {
-      throw new Error('Produto não encontrado');
-    }
-
-    const produtoRemovido = this.produtos.splice(index, 1)[0];
-    this.salvarProdutos();
-    return produtoRemovido;
-  }
-
-  // Buscar produtos por categoria
-  async buscarPorCategoria(categoria) {
-    const produtos = await this.buscarTodos();
-    return produtos.filter(produto => 
-      produto.categoria.toLowerCase().includes(categoria.toLowerCase())
-    );
-  }
-
-  // Buscar produtos por nome
-  async buscarPorNome(nome) {
-    const produtos = await this.buscarTodos();
-    return produtos.filter(produto => 
-      produto.nome.toLowerCase().includes(nome.toLowerCase())
-    );
-  }
-
-  // Buscar produtos com estoque baixo
-  async buscarEstoqueBaixo(limite = 10) {
-    const produtos = await this.buscarTodos();
-    return produtos.filter(produto => produto.estoque <= limite);
-  }
-
-  // Obter categorias únicas
-  async obterCategorias() {
-    const produtos = await this.buscarTodos();
-    return [...new Set(produtos.map(produto => produto.categoria))];
-  }
-
-  // Obter marcas únicas
-  async obterMarcas() {
-    const produtos = await this.buscarTodos();
-    return [...new Set(produtos.map(produto => produto.marca))];
+    // Converte os dados para o formato do projeto
+    return data.map(item => ({
+      id: item.id,
+      nome: item.nome || item.name,
+      preco: item.preco || item.price || 0,
+      categoria: item.categoria || 'Sem categoria',
+      descricao: item.descricao || '',
+      estoque: item.estoque || 10,
+      imagem: item.imagem || '',
+      marca: item.marca || '',
+      tipo: item.tipo || '',
+      tamanho: item.tamanho || '',
+      disponivel: item.disponivel !== false
+    }));
+  } catch (error) {
+    console.error('Erro ao buscar produtos:', error);
+    return [];
   }
 }
 
-// Instância única do serviço
-const shampooService = new ShampooService();
+// Cadastrar novo produto
+export async function adicionarProduto(produto) {
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        nome: produto.nome,
+        preco: parseFloat(produto.preco),
+        categoria: produto.categoria,
+        descricao: produto.descricao,
+        imagem: produto.imagem,
+        marca: produto.marca,
+        tipo: produto.tipo,
+        tamanho: produto.tamanho,
+        estoque: parseInt(produto.estoque),
+        disponivel: produto.disponivel !== false
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error('Erro ao adicionar produto');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Erro ao adicionar produto:', error);
+    throw error;
+  }
+}
 
-export default shampooService;
+// Buscar produto por ID
+export async function buscarProdutoPorId(id) {
+  try {
+    const response = await fetch(`${API_URL}/${id}`);
+    
+    if (!response.ok) {
+      throw new Error('Produto não encontrado');
+    }
+    
+    const item = await response.json();
+    
+    return {
+      id: item.id,
+      nome: item.nome || item.name,
+      preco: item.preco || item.price || 0,
+      categoria: item.categoria || 'Sem categoria',
+      descricao: item.descricao || '',
+      estoque: item.estoque || 10,
+      imagem: item.imagem || '',
+      marca: item.marca || '',
+      tipo: item.tipo || '',
+      tamanho: item.tamanho || '',
+      disponivel: item.disponivel !== false
+    };
+  } catch (error) {
+    console.error('Erro ao buscar produto:', error);
+    return null;
+  }
+}
+
+// Atualizar produto
+export async function atualizarProduto(id, produto) {
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        nome: produto.nome,
+        preco: parseFloat(produto.preco),
+        categoria: produto.categoria,
+        descricao: produto.descricao,
+        imagem: produto.imagem,
+        marca: produto.marca,
+        tipo: produto.tipo,
+        tamanho: produto.tamanho,
+        estoque: parseInt(produto.estoque),
+        disponivel: produto.disponivel !== false
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error('Erro ao atualizar produto');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Erro ao atualizar produto:', error);
+    throw error;
+  }
+}
+
+// Deletar produto
+export async function deletarProduto(id) {
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE'
+    });
+    
+    if (!response.ok) {
+      throw new Error('Erro ao deletar produto');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Erro ao deletar produto:', error);
+    throw error;
+  }
+}
+
+// Buscar produtos por categoria
+export async function buscarPorCategoria(categoria) {
+  try {
+    const produtos = await buscarProdutos();
+    return produtos.filter(produto => 
+      produto.categoria.toLowerCase().includes(categoria.toLowerCase())
+    );
+  } catch (error) {
+    console.error('Erro ao buscar por categoria:', error);
+    return [];
+  }
+}
+
+// Buscar produtos por nome
+export async function buscarPorNome(nome) {
+  try {
+    const produtos = await buscarProdutos();
+    return produtos.filter(produto => 
+      produto.nome.toLowerCase().includes(nome.toLowerCase())
+    );
+  } catch (error) {
+    console.error('Erro ao buscar por nome:', error);
+    return [];
+  }
+}
+
+// Buscar produtos com estoque baixo
+export async function buscarEstoqueBaixo(limite = 10) {
+  try {
+    const produtos = await buscarProdutos();
+    return produtos.filter(produto => produto.estoque <= limite);
+  } catch (error) {
+    console.error('Erro ao buscar estoque baixo:', error);
+    return [];
+  }
+}
+
+// Obter categorias únicas
+export async function obterCategorias() {
+  try {
+    const produtos = await buscarProdutos();
+    return [...new Set(produtos.map(produto => produto.categoria).filter(Boolean))];
+  } catch (error) {
+    console.error('Erro ao obter categorias:', error);
+    return [];
+  }
+}
+
+// Obter marcas únicas
+export async function obterMarcas() {
+  try {
+    const produtos = await buscarProdutos();
+    return [...new Set(produtos.map(produto => produto.marca).filter(Boolean))];
+  } catch (error) {
+    console.error('Erro ao obter marcas:', error);
+    return [];
+  }
+}
