@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import { Box, Typography, Container } from "@mui/material";
 import Navbar from "../componentes/Navbar";
@@ -18,6 +19,44 @@ function Home() {
         sx={{
           height: "100vh",
           backgroundImage: 'url("/images/transferir (11).jpg")',
+=======
+// src/pages/Home.jsx
+
+import React from "react";
+import { Box, Typography, Container } from "@mui/material";
+import Navbar from "../componentes/Navbar.jsx";
+import "../componentes/bubbles.css"; 
+
+
+function home() {
+  return (
+    <>
+      {/* {barra do munu glass} */}
+      <Navbar />
+      <div className="bubbles">
+  {[...Array(25)].map((_, i) => (
+    <div
+  key={i}
+  className="bubble"
+  style={{
+    left: `${Math.random() * 100}%`,
+    width: `${25 + Math.random() * 25}px`,
+    animationDuration: `${6 + Math.random() * 8}s`,
+    animationDelay: `${Math.random() * 4}s`,
+  }}
+/>
+
+  ))}
+</div>
+
+
+
+      {/* IMAGEM DE FUNDO MAIS TEXTO CENTRALIZADO*/}
+      <Box
+        sx={{
+          height: "100vh",
+          backgroundImage: 'url("/images/Frutiger Aero Aqua!!!.jpg")',
+>>>>>>> main
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",
@@ -26,11 +65,19 @@ function Home() {
           textAlign: "center",
           color: "#fff",
           px: 2,
+<<<<<<< HEAD
           pt: "64px",
           position: "relative",
           overflow: "hidden",
         }}
       >
+=======
+          pt: "80px", // espaço para a navbar fixa
+        }}
+      >
+    
+      
+>>>>>>> main
         {/* Bolhas */}
         <div className="bubbles">
           {[...Array(7)].map((_, i) => (
@@ -49,7 +96,11 @@ function Home() {
               fontFamily: "'Asap', sans-serif",
             }}
           >
+<<<<<<< HEAD
             BEM-VINDO
+=======
+            frutiger aeroooo
+>>>>>>> main
           </Typography>
 
           <Typography
@@ -73,4 +124,8 @@ function Home() {
   );
 }
 
+<<<<<<< HEAD
 export default Home;
+=======
+export default home;
+>>>>>>> main
