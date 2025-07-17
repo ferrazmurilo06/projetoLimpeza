@@ -1,171 +1,115 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Navbar from '../componentes/Navbar';
-import { Box, Typography, TextField, Button, Container } from '@mui/material';
+import { TextField, Button, Box, Typography, Stack } from '@mui/material';
 
 function EdicaoPage() {
-  const { id } = useParams();
+  const { id } = useParams(); // pega o ID da URL
   const navigate = useNavigate();
-
   const [produto, setProduto] = useState({
     nome: '',
     preco: '',
-    categoria: '',
     estoque: '',
-    descricao: ''
   });
+  const [carregando, setCarregando] = useState(true);
+  const [produtoOriginal, setProdutoOriginal] = useState(null);
 
-  const [loading, setLoading] = useState(true);
+  const baseURL = 'https://6879762263f24f1fdca20cd8.mockapi.io/api/Produtos';
 
   useEffect(() => {
-    fetch(`https://api.exemplo.com/produtos/${id}`)
+    fetch(`${baseURL}/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        setProduto({
-          nome: data.nome || '',
-          preco: data.preco || '',
-          categoria: data.categoria || '',
-          estoque: data.estoque || '',
-          descricao: data.descricao || ''
-        });
-        setLoading(false);
+        const produtoCarregado = {
+          nome: data.nome,
+          preco: data.preco,
+          estoque: data.estoque,
+        };
+        setProduto(produtoCarregado);
+        setProdutoOriginal(produtoCarregado); // salva original
+        setCarregando(false);
       })
       .catch((err) => {
-        console.error("Erro ao buscar produto:", err);
-        setLoading(false);
+        console.error('Erro ao carregar produto:', err);
+        setCarregando(false);
       });
   }, [id]);
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setProduto((prev) => ({ ...prev, [name]: value }));
-  }
+  };
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    fetch(`https://api.exemplo.com/produtos/${id}`, {
+    fetch(`${baseURL}/${id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...produto,
-        preco: parseFloat(produto.preco),
-        estoque: parseInt(produto.estoque, 10)
-      })
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(produto),
     })
       .then((res) => {
         if (res.ok) {
-          alert("Produto atualizado com sucesso!");
+          alert('Produto atualizado com sucesso!');
           navigate('/produtos');
         } else {
-          alert("Erro ao atualizar produto");
+          alert('Erro ao atualizar produto');
         }
-      });
-  }
+      })
+      .catch(() => alert('Erro na requisição'));
+  };
 
-  if (loading) return <p style={{ padding: '20px' }}>Carregando dados do produto...</p>;
+  const handleRestaurar = () => {
+    if (produtoOriginal) {
+      setProduto(produtoOriginal);
+      alert('Alterações desfeitas e dados restaurados.');
+    }
+  };
+
+  if (carregando) return <p>Carregando...</p>;
 
   return (
-    <>
-      <Navbar />
-      <Container maxWidth="sm" sx={{ mt: 12, mb: 6 }}>
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2.5,
-            p: 3,
-            backgroundColor: '#f9f9f9',
-            boxShadow: 3,
-            borderRadius: 2,
-            border: '1px solid #e0e0e0',
-          }}
-        >
-          <Typography variant="h5" component="h1" align="center" gutterBottom sx={{ color: '#333' }}>
-            Editar Produto (ID: {id})
-          </Typography>
-
-          <TextField
-            label="Nome do Produto"
-            name="nome"
-            variant="outlined"
-            fullWidth
-            required
-            value={produto.nome}
-            onChange={handleChange}
-            size="small"
-          />
-
-          <TextField
-            label="Preço"
-            name="preco"
-            variant="outlined"
-            type="number"
-            fullWidth
-            required
-            value={produto.preco}
-            onChange={handleChange}
-            InputProps={{ inputProps: { step: "0.01", min: "0" } }}
-            size="small"
-          />
-
-          <TextField
-            label="Categoria"
-            name="categoria"
-            variant="outlined"
-            fullWidth
-            required
-            value={produto.categoria}
-            onChange={handleChange}
-            size="small"
-          />
-
-          <TextField
-            label="Quantidade em Estoque"
-            name="estoque"
-            variant="outlined"
-            type="number"
-            fullWidth
-            required
-            value={produto.estoque}
-            onChange={handleChange}
-            InputProps={{ inputProps: { min: "0" } }}
-            size="small"
-          />
-
-          <TextField
-            label="Descrição"
-            name="descricao"
-            variant="outlined"
-            multiline
-            rows={3}
-            fullWidth
-            required
-            value={produto.descricao}
-            onChange={handleChange}
-          />
-
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-            sx={{
-              mt: 1.5,
-              py: 1,
-              backgroundColor: '#0077cc',
-              color: '#fff',
-              '&:hover': {
-                backgroundColor: '#005fa3',
-              },
-            }}
-          >
+    <Box sx={{ maxWidth: 500, mx: 'auto', mt: 5 }}>
+      <Typography variant="h5" gutterBottom>
+        Editar Produto (ID: {id})
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          fullWidth
+          margin="normal"
+          label="Nome"
+          name="nome"
+          value={produto.nome}
+          onChange={handleChange}
+        />
+        <TextField
+          fullWidth
+          margin="normal"
+          label="Preço"
+          name="preco"
+          type="number"
+          value={produto.preco}
+          onChange={handleChange}
+        />
+        <TextField
+          fullWidth
+          margin="normal"
+          label="Estoque"
+          name="estoque"
+          type="number"
+          value={produto.estoque}
+          onChange={handleChange}
+        />
+        <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+          <Button type="submit" variant="contained">
             Salvar Alterações
           </Button>
-        </Box>
-      </Container>
-    </>
+          <Button type="button" variant="outlined" color="warning" onClick={handleRestaurar}>
+            Restaurar
+          </Button>
+        </Stack>
+      </form>
+    </Box>
   );
 }
 
