@@ -1,30 +1,8 @@
-<<<<<<< HEAD
-import React from "react";
-import { Box, Typography, Container } from "@mui/material";
-import Navbar from "../componentes/Navbar";
-import "../componentes/bubbles.css";
-import ProdutoLista from "./ProdutoLista";
-
-
-
-
-function Home() {
-  return (
-    <>
-      <Navbar />
-      
-
-      {/* Bolhas flutuando */}
-      <Box
-        sx={{
-          height: "100vh",
-          backgroundImage: 'url("/images/transferir (11).jpg")',
-=======
 // src/pages/Home.jsx
 
 import React from "react";
 import { Box, Typography, Container } from "@mui/material";
-import Navbar from "../componentes/Navbar.jsx";
+import Navbar from "../componentes/Navbar/Navbar.jsx";
 import "../componentes/bubbles.css"; 
 
 
@@ -56,7 +34,6 @@ function home() {
         sx={{
           height: "100vh",
           backgroundImage: 'url("/images/Frutiger Aero Aqua!!!.jpg")',
->>>>>>> main
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",
@@ -65,19 +42,11 @@ function home() {
           textAlign: "center",
           color: "#fff",
           px: 2,
-<<<<<<< HEAD
-          pt: "64px",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-=======
           pt: "80px", // espaço para a navbar fixa
         }}
       >
     
       
->>>>>>> main
         {/* Bolhas */}
         <div className="bubbles">
           {[...Array(7)].map((_, i) => (
@@ -96,11 +65,7 @@ function home() {
               fontFamily: "'Asap', sans-serif",
             }}
           >
-<<<<<<< HEAD
-            BEM-VINDO
-=======
             frutiger aeroooo
->>>>>>> main
           </Typography>
 
           <Typography
@@ -124,8 +89,4 @@ function home() {
   );
 }
 
-<<<<<<< HEAD
-export default Home;
-=======
 export default home;
->>>>>>> main
