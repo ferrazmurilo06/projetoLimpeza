@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Box, Typography, Container } from "@mui/material";
-import Navbar from "../componentes/Navbar.jsx";
+import Navbar from "../componentes/Navbar/Navbar.jsx";
 import "../componentes/bubbles.css"; 
 
 
