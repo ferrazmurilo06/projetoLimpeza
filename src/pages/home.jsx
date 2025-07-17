@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Box, Typography, Container } from "@mui/material";
-import Navbar from "../componentes/Navbar";
+import Navbar from "../componentes/Navbar.jsx";
 import "../componentes/bubbles.css"; 
 
 
@@ -45,7 +45,17 @@ function home() {
           pt: "80px", // espaço para a navbar fixa
         }}
       >
-        <Container>
+    
+      
+        {/* Bolhas */}
+        <div className="bubbles">
+          {[...Array(7)].map((_, i) => (
+            <div key={i} className="bubble" />
+          ))}
+        </div>
+
+        {/* Conteúdo */}
+        <Container sx={{ zIndex: 2, position: "relative" }}>
           <Typography
             variant="h3"
             sx={{
@@ -65,8 +75,14 @@ function home() {
               fontFamily: "'Asap', sans-serif",
             }}
           >
-            Bem-vindo ao Café do Amanhã, onde o aroma do café se mistura com a brisa do mar.
+           produtos cadastrados abaixoo
           </Typography>
+        </Container>
+      </Box>
+   {/* Produtos cadastrados */}
+      <Box sx={{ py: 6, backgroundColor: "#f5f5f5" }}>
+        <Container>
+          <ProdutoLista />
         </Container>
       </Box>
     </>
