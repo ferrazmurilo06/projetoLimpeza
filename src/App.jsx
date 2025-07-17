@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// App.jsx
+import React from 'react';
+import { Routes, Route, Outlet } from 'react-router-dom';
+import Navbar from './componentes/Navbar.jsx'; // Navbar
+import Home from './pages/home.jsx';           // Home
+import CadastroPage from './pages/CadastroPage.jsx'; // página de cadastro
+import EdicaoPage from './pages/EdicaoPage.jsx';   // página de edição
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+// Layout principal
+function Layout() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <Navbar />
+      <main>
+        {/* espaço pra carregar a página da rota atual */}
+        <Outlet />
+      </main>
+    </div>
+  );
 }
 
-export default App
+// regras da navegação
+function App() {
+  return (
+    <Routes>
+      {/* Todas as rotas dentro daqui usarão o <Layout> como base */}
+      <Route path="/" element={<Layout />}>
+
+        {/* Rota principal: mostra a Home */}
+        <Route index element={<Home />} />
+
+        {/* Rota de cadastro: mostra a CadastroPage */}
+        <Route path="cadastro" element={<CadastroPage />} />
+        
+        {/* Rota de edição: mostra a EdicaoPage */}
+        <Route path="editar/:id" element={<EdicaoPage />} />
+        
+      </Route>
+    </Routes>
+  );
+}
+
+export default App;
