@@ -1,115 +1,168 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { TextField, Button, Box, Typography, Stack } from '@mui/material';
+import { TextField, Button, Box, Typography, Container, CircularProgress, Alert, Stack } from '@mui/material';
+// Importando as funções do serviço de API
+import { buscarProdutoPorId, atualizarProduto } from '../services/apiService.js';
 
 function EdicaoPage() {
-  const { id } = useParams(); // pega o ID da URL
+  const { id } = useParams(); // Pega o ID da URL
   const navigate = useNavigate();
+
   const [produto, setProduto] = useState({
     nome: '',
     preco: '',
+    categoria: '', 
     estoque: '',
+    descricao: '',
+    imagem: '', 
   });
-  const [carregando, setCarregando] = useState(true);
-  const [produtoOriginal, setProdutoOriginal] = useState(null);
 
-  const baseURL = 'https://6879762263f24f1fdca20cd8.mockapi.io/api/Produtos';
+  // Estados para controlar o carregamento e erros
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Efeito que busca os dados do produto na API quando a página carrega
   useEffect(() => {
-    fetch(`${baseURL}/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const produtoCarregado = {
-          nome: data.nome,
-          preco: data.preco,
-          estoque: data.estoque,
-        };
-        setProduto(produtoCarregado);
-        setProdutoOriginal(produtoCarregado); // salva original
-        setCarregando(false);
-      })
-      .catch((err) => {
-        console.error('Erro ao carregar produto:', err);
-        setCarregando(false);
-      });
-  }, [id]);
+    const carregarProduto = async () => {
+      try {
+        setLoading(true);
+        const data = await buscarProdutoPorId(id);
+        if (data) {
+          setProduto(data);
+        } else {
+          setError("Produto não encontrado.");
+        }
+      } catch (err) {
+        setError("Erro ao carregar os dados do produto.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    carregarProduto();
+  }, [id]); // Roda de novo se o ID na URL mudar
+
+  // Função que atualiza o estado conforme o usuário digita
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProduto((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  // envia as alterações para a API
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch(`${baseURL}/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(produto),
-    })
-      .then((res) => {
-        if (res.ok) {
-          alert('Produto atualizado com sucesso!');
-          navigate('/produtos');
-        } else {
-          alert('Erro ao atualizar produto');
-        }
-      })
-      .catch(() => alert('Erro na requisição'));
-  };
-
-  const handleRestaurar = () => {
-    if (produtoOriginal) {
-      setProduto(produtoOriginal);
-      alert('Alterações desfeitas e dados restaurados.');
+    setLoading(true);
+    try {
+      await atualizarProduto(id, produto);
+      alert('Produto atualizado com sucesso!');
+      navigate('/'); // Volta para a página principal
+    } catch (err) {
+      alert('Erro ao atualizar o produto.');
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (carregando) return <p>Carregando...</p>;
+  // Se estiver carregando, mostra um indicador
+  if (loading) {
+    return <Box sx={{ display: 'flex', justifyContent: 'center', mt: 12 }}><CircularProgress /></Box>;
+  }
+
+  // Se der erro, mostra uma mensagem
+  if (error) {
+    return <Container sx={{ mt: 12 }}><Alert severity="error">{error}</Alert></Container>;
+  }
 
   return (
-    <Box sx={{ maxWidth: 500, mx: 'auto', mt: 5 }}>
-      <Typography variant="h5" gutterBottom>
-        Editar Produto (ID: {id})
-      </Typography>
-      <form onSubmit={handleSubmit}>
+    
+    <Container maxWidth="sm" sx={{ mt: 12, mb: 6 }}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          p: 4,
+          boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.08)',
+          borderRadius: '12px',
+          backgroundColor: '#fff',
+        }}
+      >
+        <Typography variant="h5" component="h1" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold', fontFamily: "'Asap', sans-serif" }}>
+          Editar Produto (ID: {id})
+        </Typography>
+
         <TextField
-          fullWidth
-          margin="normal"
-          label="Nome"
+          label="Nome do Produto"
           name="nome"
           value={produto.nome}
           onChange={handleChange}
+          fullWidth
+          required
+          size="small"
         />
         <TextField
-          fullWidth
-          margin="normal"
           label="Preço"
           name="preco"
           type="number"
           value={produto.preco}
           onChange={handleChange}
+          fullWidth
+          required
+          size="small"
+          InputProps={{ inputProps: { step: "0.01", min: "0" } }}
+        />
+        <TextField 
+          label="Categoria"
+          name="categoria"
+          value={produto.categoria}
+          onChange={handleChange}
+          fullWidth
+          required
+          size="small"
         />
         <TextField
-          fullWidth
-          margin="normal"
-          label="Estoque"
+          label="Quantidade em Estoque"
           name="estoque"
           type="number"
           value={produto.estoque}
           onChange={handleChange}
+          fullWidth
+          size="small"
+          InputProps={{ inputProps: { min: "0" } }}
+        />
+        <TextField
+          label="Descrição"
+          name="descricao"
+          multiline
+          rows={4}
+          value={produto.descricao}
+          onChange={handleChange}
+          fullWidth
+          required
+        />
+        <TextField
+          label="URL da Imagem"
+          name="imagem"
+          value={produto.imagem}
+          onChange={handleChange}
+          fullWidth
+          required
+          size="small"
         />
         <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-          <Button type="submit" variant="contained">
-            Salvar Alterações
+          <Button type="submit" variant="contained" disabled={loading}>
+            {loading ? 'Salvando...' : 'Salvar Alterações'}
           </Button>
-          <Button type="button" variant="outlined" color="warning" onClick={handleRestaurar}>
-            Restaurar
+          <Button type="button" variant="outlined" onClick={() => navigate('/')}>
+            Cancelar
           </Button>
         </Stack>
-      </form>
-    </Box>
+      </Box>
+    </Container>
   );
 }
 

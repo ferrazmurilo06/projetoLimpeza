@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import shampooService from '../services/shampooService';
+import shampooService from '../services/apiService';
 
 // Hook personalizado para gerenciar dados dos shampoos
 export const useShampoos = () => {
