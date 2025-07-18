@@ -1,0 +1,64 @@
+{
+  "produtos": [
+    {
+      "id": 1,
+      "nome": "Shampoo Hidratante Pantene",
+      "preco": 15.99,
+      "categoria": "Cabelo Seco",
+      "descricao": "Shampoo hidratante para cabelos secos e danificados, com vitamina E e óleo de argan",
+      "estoque": 25,
+      "imagem": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300&h=300&fit=crop",
+      "marca": "Pantene",
+      "tipo": "Hidratante",
+      "tamanho": "400ml"
+    },
+    {
+      "id": 2,
+      "nome": "Shampoo Anticaspa Head & Shoulders",
+      "preco": 12.50,
+      "categoria": "Anticaspa",
+      "descricao": "Shampoo anticaspa com zinco pyrithione, combate a caspa e coceira",
+      "estoque": 18,
+      "imagem": "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=300&h=300&fit=crop",
+      "marca": "Head & Shoulders",
+      "tipo": "Anticaspa",
+      "tamanho": "200ml"
+    },
+    {
+      "id": 3,
+      "nome": "Shampoo Neutro Johnson's Baby",
+      "preco": 8.99,
+      "categoria": "Infantil",
+      "descricao": "Shampoo suave para bebês e crianças, não arde os olhos",
+      "estoque": 30,
+      "imagem": "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=300&h=300&fit=crop",
+      "marca": "Johnson's",
+      "tipo": "Neutro",
+      "tamanho": "300ml"
+    },
+    {
+      "id": 4,
+      "nome": "Shampoo Óleo de Coco TRESemmé",
+      "preco": 18.75,
+      "categoria": "Nutrição",
+      "descricao": "Shampoo nutritivo com óleo de coco, para cabelos ressecados",
+      "estoque": 12,
+      "imagem": "https://images.unsplash.com/photo-1594736797933-d0e501ba2fe6?w=300&h=300&fit=crop",
+      "marca": "TRESemmé",
+      "tipo": "Nutritivo",
+      "tamanho": "400ml"
+    },
+    {
+      "id": 5,
+      "nome": "Shampoo Matizador Loreal",
+      "preco": 22.90,
+      "categoria": "Cabelo Loiro",
+      "descricao": "Shampoo matizador para cabelos loiros e grisalhos, elimina tons amarelados",
+      "estoque": 8,
+      "imagem": "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=300&h=300&fit=crop",
+      "marca": "Loreal",
+      "tipo": "Matizador",
+      "tamanho": "300ml"
+    }
+  ]
+}
