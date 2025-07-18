@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../componentes/Navbar';
+import Navbar from '../componentes/Navbar/Navbar';
 import { Box, Typography, TextField, Button, Container } from '@mui/material';
 
 function CadastroPage() {

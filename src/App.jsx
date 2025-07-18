@@ -1,7 +1,7 @@
 // App.jsx
 import React from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
-import Navbar from './componentes/Navbar.jsx'; // Navbar
+import Navbar from './componentes/Navbar/Navbar.jsx'; // Navbar
 import Home from './pages/home.jsx';           // Home
 import CadastroPage from './pages/CadastroPage.jsx'; // página de cadastro
 import EdicaoPage from './pages/EdicaoPage.jsx';   // página de edição
@@ -31,7 +31,7 @@ function App() {
         <Route index element={<Home />} />
 
         {/* Rota de cadastro: mostra a CadastroPage */}
-        <Route path="cadastro" element={<CadastroPage />} />
+        <Route path="cadastro" element={<CadastroPage/>} />
         
         {/* Rota de edição: mostra a EdicaoPage */}
         <Route path="editar/:id" element={<EdicaoPage />} />
