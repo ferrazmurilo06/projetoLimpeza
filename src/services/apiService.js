@@ -1,4 +1,4 @@
-const API_URL = 'https://687965fc63f24f1fdca1e29c.mockapi.io/data/produtos';
+const API_URL = 'https://687d3629918b6422433149ca.mockapi.io/Produtos/Produtos';
 
 // 1. buscar todos os produtos
 export async function buscarProdutos() {

@@ -1,7 +1,7 @@
 // App.jsx
 import React from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
-import Navbar from './componentes/Navbar/Navbar.jsx'; // Navbar
+import Navbar from './components/Navbar/Navbar.jsx'; // Navbar
 import Home from './pages/home.jsx';           // Home
 import CadastroPage from './pages/CadastroPage.jsx'; // página de cadastro
 import EdicaoPage from './pages/EdicaoPage.jsx';   // página de edição
