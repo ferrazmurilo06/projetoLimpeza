@@ -147,7 +147,7 @@ const ProdutoLista = () => {
                       fontWeight: 'bold'
                     }}
                   >
-                    {produto.estoque > 0 ? "Disponível para venda" : "Indisponível"}
+                    {produto.estoque > 0 ? "Disponível" : "Indisponível"}
                   </Typography>
                 </CardContent>
                 <Box sx={{ p: 2, display: 'flex', gap: '10px', justifyContent: 'center' }}>
