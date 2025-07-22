@@ -1,0 +1,158 @@
+/* ===== ESTILOS GERAIS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+  min-height: 100vh;
+  margin: 0;
+  color: #333;
+}
+
+/* ===== CONTAINER PRINCIPAL ===== */
+.MuiContainer-root {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* ===== CABEÇALHO ===== */
+.MuiTypography-h4 {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  color: #0066cc;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 3px rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+/* ===== CARDS DE PRODUTO ===== */
+.MuiCard-root {
+  width: 300px;
+  height: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  
+  /* Efeito Frutiger Aero */
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 
+    0 4px 20px rgba(0, 120, 215, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6) !important;
+  transition: all 0.3s ease !important;
+  overflow: hidden;
+  position: relative;
+}
+
+.MuiCard-root:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 
+    0 8px 25px rgba(0, 120, 215, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Efeito de brilho no card */
+.MuiCard-root::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(
+    to bottom, 
+    rgba(255, 255, 255, 0.3) 0%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== ÁREA DA IMAGEM ===== */
+.MuiCardMedia-root {
+  object-fit: contain;
+  height: 160px;
+  padding: 16px;
+  width: 100%;
+  background: linear-gradient(135deg, #e6f7ff, #b3e0ff);
+  border-radius: 16px 16px 0 0 !important;
+}
+
+/* ===== CONTEÚDO DO CARD ===== */
+.MuiCardContent-root {
+  flex-grow: 1;
+  width: 100%;
+  padding: 16px !important;
+  text-align: center;
+  background: transparent !important;
+}
+
+.MuiTypography-h6 {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  color: #0078d7;
+  margin-bottom: 8px;
+}
+
+.MuiTypography-body2 {
+  font-family: 'Quicksand', sans-serif;
+  margin-bottom: 4px;
+}
+
+/* ===== BOTÕES ===== */
+.MuiButton-root {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  text-transform: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.MuiButton-outlined {
+  border: 2px solid !important;
+  border-color: #4facfe !important;
+  color: #4facfe !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+}
+
+.MuiButton-outlined:hover {
+  background: linear-gradient(to right, #4facfe, #00b4ff) !important;
+  color: white !important;
+  border-color: transparent !important;
+  box-shadow: 0 2px 8px rgba(0, 120, 215, 0.3) !important;
+  transform: translateY(-2px);
+}
+
+/* Botão de excluir */
+.MuiButton-outlinedColorError {
+  border-color: #ff6b6b !important;
+  color: #ff6b6b !important;
+}
+
+.MuiButton-outlinedColorError:hover {
+  background: linear-gradient(to right, #ff6b6b, #f5626f) !important;
+  color: white !important;
+}
+
+/* ===== ALERTAS ===== */
+.MuiAlert-standardWarning {
+  background: rgba(255, 213, 79, 0.8) !important;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* ===== LOADING ===== */
+.MuiCircularProgress-root {
+  color: #4facfe;
+}
+
+/* ===== GRID ===== */
+.MuiGrid-container {
+  justify-content: center;
+}

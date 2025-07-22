@@ -1,12 +1,71 @@
-@import url('https://fonts.googleapis.com/css2?family=Asap:wght@400;600;700&display=swap');
-
+/* ===== RESET INICIAL ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ===== FUNDO AERO ===== */
 body {
+  background: 
+    linear-gradient(135deg, #a8d8ff 0%, #d0f0fd 50%, #e6f7ff 100%),
+    url('https://www.transparenttextures.com/patterns/soft-waves.png') !important;
+  min-height: 100vh;
+  
   font-family: 'Asap', sans-serif;
-  background-color: #f9f9f9; /* opcional, para dar uma base clean */
+}
+
+/* ===== CONTAINER PRINCIPAL ===== */
+.MuiContainer-root {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* ===== CARDS ===== */
+.MuiCard-root {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  border-radius: 16px !important;
+  box-shadow: 
+    0 4px 20px rgba(0, 120, 215, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6) !important;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* ===== TÍTULO ===== */
+.MuiTypography-h4 {
+  color: #0066cc !important;
+  text-shadow: 0 2px 3px rgba(255, 255, 255, 0.5);
+  margin-bottom: 20px !important;
+  font-weight: 700 !important;
+}
+
+/* ===== BOTÕES ===== */
+.MuiButton-root {
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  transition: all 0.3s !important;
+}
+
+.MuiButton-outlined {
+  border: 2px solid !important;
+  border-color: #4facfe !important;
+  color: #4facfe !important;
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.MuiButton-outlined:hover {
+  background: linear-gradient(to right, #4facfe, #00b4ff) !important;
+  color: white !important;
+}
+
+.MuiButton-outlinedColorError {
+  border-color: #ff6b6b !important;
+  color: #ff6b6b !important;
+}
+
+.MuiButton-outlinedColorError:hover {
+  background: linear-gradient(to right, #ff6b6b, #ff4757) !important;
 }

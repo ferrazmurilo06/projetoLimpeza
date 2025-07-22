@@ -34,7 +34,7 @@ function home() {
       <Box
         sx={{
           height: "100vh",
-          backgroundImage: 'url("/images/Frutiger Aero Aqua!!!.jpg")',
+          backgroundImage: 'url("/images/fundohome.png")',
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",
@@ -66,22 +66,25 @@ function home() {
               fontFamily: "'Asap', sans-serif",
             }}
           >
-            frutiger aeroooo
+            Aero-Clean
           </Typography>
 
           <Typography
-            variant="h6"
-            sx={{
-              textShadow: "1px 1px 3px rgba(0,0,0,0.5)",
-              fontFamily: "'Asap', sans-serif",
-            }}
-          >
-           produtos cadastrados abaixoo
-          </Typography>
+  variant="h6"
+  sx={{
+    textShadow: "1px 1px 3px rgba(0,0,0,0.5)",
+    fontFamily: "'Asap', sans-serif",
+    "&.MuiTypography-h6": { // Afeta apenas este elemento
+      color: "#FFFFFF",
+    },
+  }}
+>
+  Catálogo de Sabonetes Líquidos
+</Typography>
         </Container>
       </Box>
    {/* Produtos cadastrados */}
-      <Box sx={{ py: 6, backgroundColor: "#f5f5f5" }}>
+      <Box sx={{ py: 6, backgroundColor: " #e3f2fd" }}>
         <Container>
           <ProdutoLista />
         </Container>

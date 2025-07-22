@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardMedia, Typography, Button, Grid, Container, Box, CircularProgress, Alert } from "@mui/material";
-import { buscarProdutos, deletarProduto } from '../services/apiService.js'; // Importa do serviço OFICIAL
+import { buscarProdutos, deletarProduto } from '../services/apiService.js';
+import './ProdutoLista.css';
 
-// A sua lista de produtos locais para a apresentação
 const produtosLocaisExtras = [
   { id: 3, nome: "Sabonete Palmolive Golfinho", preco: 14.9, categoria: "Higiene", estoque: 8, descricao: "Aroma suave de maresia e ilustração de um golfinho saltando.", imagem: "/images/Produto1.jpg", disponivel: true },
   { id: 4, nome: "Sabonete Softsoap Panda", preco: 11.9, categoria: "Higiene", estoque: 0, descricao: "Fragrância delicada com estampa de Panda.", imagem: "/images/Produto5.jpg", disponivel: false },
@@ -23,12 +23,9 @@ const ProdutoLista = () => {
     try {
       setLoading(true);
       const produtosDaApi = await buscarProdutos();
-      
       const idsDaApi = new Set(produtosDaApi.map(p => p.id));
-      const produtosExtrasFiltrados = produtosLocaisExtras.filter(p => !idsDaApi.has(String(p.id))); // Converte p.id para string para garantir a comparação
-      
+      const produtosExtrasFiltrados = produtosLocaisExtras.filter(p => !idsDaApi.has(String(p.id)));
       const listaCompleta = [...produtosDaApi, ...produtosExtrasFiltrados];
-
       setProdutos(listaCompleta);
       setError(null);
     } catch (err) {
@@ -49,7 +46,7 @@ const ProdutoLista = () => {
       try {
         await deletarProduto(id);
         alert("Produto deletado com sucesso da API!");
-        carregarProdutos(); 
+        carregarProdutos();
       } catch (err) {
         setProdutos(produtos.filter(p => p.id !== id));
         alert("Produto removido da lista de demonstração!");
@@ -59,50 +56,132 @@ const ProdutoLista = () => {
   };
 
   if (loading) {
-    return <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}><CircularProgress /></Box>;
+    return (
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        p: 4,
+        backgroundColor: '#e3f2fd',
+        minHeight: '100vh'
+      }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
-    <Container sx={{ paddingY: 4 }}>
-      {error && <Alert severity="warning" sx={{ mb: 2 }}>{error}</Alert>}
-      <Typography variant="h4" gutterBottom>
-        Produtos Cadastrados
-      </Typography>
-      <Grid container spacing={3}>
-        {produtos.map((produto) => (
-          <Grid item xs={12} sm={6} md={4} key={produto.id}>
-            <Card sx={{ maxWidth: 345, margin: "auto", height: "100%", display: "flex", flexDirection: "column" }}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={produto.imagem}
-                alt={produto.nome}
-                sx={{ objectFit: "cover" }}
-                onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x400/CCCCCC/FFFFFF?text=Imagem'; }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h6">{produto.nome}</Typography>
-                <Typography variant="body2">{produto.descricao}</Typography>
-                <Typography variant="body2"><strong>Preço:</strong> R$ {produto.preco.toFixed(2)}</Typography>
-                <Typography variant="body2"><strong>Categoria:</strong> {produto.categoria}</Typography>
-                <Typography variant="body2"><strong>Estoque:</strong> {produto.estoque}</Typography>
-                <Typography variant="body2" sx={{ color: produto.disponivel ? "green" : "red" }}>
-                  {produto.disponivel ? "Disponível para venda" : "Indisponível"}
-                </Typography>
-              </CardContent>
-              <Box sx={{ p: 2, mt: 'auto', display: 'flex', gap: '10px' }}>
-                <Button component={Link} to={`/editar/${produto.id}`} variant="outlined" size="small">
-                  Editar
-                </Button>
-                <Button variant="outlined" color="error" size="small" onClick={() => handleDeletar(produto.id)}>
-                  Excluir
-                </Button>
-              </Box>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+    <Box sx={{
+      backgroundColor: '#e3f2fd',
+      minHeight: '100vh',
+      py: 4
+    }}>
+      <Container>
+        {error && (
+          <Alert severity="warning" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            color: '#1976d2',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            pt: 2
+          }}
+        >
+          Produtos Cadastrados
+        </Typography>
+
+        <Grid container spacing={3} justifyContent="center">
+          {produtos.map((produto) => (
+            <Grid item key={produto.id} xs={12} sm={6} md={4}>
+              <Card sx={{
+                width: 300,
+                height: 500,
+                margin: "auto",
+                display: "flex",
+                flexDirection: "column",
+                backgroundColor: '#ffffff',
+                borderRadius: '8px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              }}>
+                <CardMedia
+                  component="img"
+                  image={produto.imagem}
+                  alt={produto.nome}
+                  sx={{
+                    objectFit: "contain",
+                    height: 160,
+                    padding: 1,
+                    backgroundColor: '#f5f5f5'
+                  }}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://placehold.co/400x400/CCCCCC/FFFFFF?text=Imagem';
+                  }}
+                />
+                <CardContent sx={{ flexGrow: 1, width: "100%" }}>
+                  <Typography variant="h6" textAlign="center">
+                    {produto.nome}
+                  </Typography>
+                  <Typography variant="body2" textAlign="center" sx={{ mt: 1 }}>
+                    {produto.descricao}
+                  </Typography>
+                  <Typography variant="body2" textAlign="center" sx={{ mt: 1 }}>
+                    <strong>Preço:</strong> R$ {produto.preco.toFixed(2)}
+                  </Typography>
+                  <Typography variant="body2" textAlign="center">
+                    <strong>Categoria:</strong> {produto.categoria}
+                  </Typography>
+                  <Typography variant="body2" textAlign="center">
+                    <strong>Estoque:</strong> {produto.estoque}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    textAlign="center"
+                    sx={{
+                      color: produto.estoque > 0 ? "green" : "red",
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    {produto.estoque > 0 ? "Disponível para venda" : "Indisponível"}
+                  </Typography>
+                </CardContent>
+                <Box sx={{ p: 2, display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                  <Button
+                    component={Link}
+                    to={`/editar/${produto.id}`}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                      border: '2px solid',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    Editar
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={() => handleDeletar(produto.id)}
+                    sx={{
+                      border: '2px solid',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    Excluir
+                  </Button>
+                </Box>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

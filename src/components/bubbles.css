@@ -14,7 +14,7 @@
   position: absolute;
   bottom: -100px;
   background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
-  border-radius: 50%;
+  border-radius: 70%;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
   animation: rise 10s infinite ease-in;
   opacity: 0.6;

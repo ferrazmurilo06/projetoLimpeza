@@ -1,0 +1,89 @@
+/* CadastroPage.css */
+
+/* Container principal - fundo gradiente e bolhas */
+.cadastro-background {
+  background: linear-gradient(135deg, #a8d8ff 0%, #d0f0fd 50%, #e6f7ff 100%);
+  min-height: 100vh;
+  padding-top: 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Bolhas decorativas */
+.cadastro-bubble {
+  position: absolute;
+  bottom: -100px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: float 15s linear infinite;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(100px);
+    opacity: 0;
+  }
+}
+
+/* Container do formulário */
+.cadastro-container {
+  position: relative;
+  z-index: 1;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Card do formulário */
+.cadastro-form-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  box-shadow: 0 8px 32px rgba(0, 119, 204, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Título do formulário */
+.cadastro-title {
+  color: #0077cc !important;
+  text-align: center !important;
+  margin-bottom: 2rem !important;
+  font-weight: 700 !important;
+  text-shadow: 0 2px 3px rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Campos do formulário */
+.cadastro-input .MuiOutlinedInput-root {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 8px !important;
+}
+
+.cadastro-input .MuiInputLabel-root {
+  color: #1976d2 !important;
+}
+
+/* Botão de submit */
+.cadastro-button {
+  background: linear-gradient(to right, #4facfe, #00b4ff) !important;
+  color: white !important;
+  padding: 10px 24px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  margin-top: 1rem !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s !important;
+}
+
+.cadastro-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
