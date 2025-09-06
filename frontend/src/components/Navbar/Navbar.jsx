@@ -14,7 +14,7 @@ function Navbar() {
       <div className="logo">Aero-Clean</div>
       <button className="menu-toggle" onClick={toggleMenu}>☰</button>
       <ul className={`nav-links ${menuAberto ? 'show' : ''}`}>
-        <li><Link to="/">Produtos</Link></li>
+        <li><Link to="/produtos">Produtos</Link></li>
         <li><Link to="/cadastro">Cadastrar Produto</Link></li>
       </ul>
     </nav>
