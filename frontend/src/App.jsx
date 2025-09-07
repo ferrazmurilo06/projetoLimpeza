@@ -3,6 +3,7 @@ import React from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar.jsx'; // Navbar
 import Home from './pages/home.jsx';           // Home
+import ProdutoLista from './pages/ProdutoLista.jsx'; // Importe a página de lista de produtos
 import CadastroPage from './pages/CadastroPage.jsx'; // página de cadastro
 import EdicaoPage from './pages/EdicaoPage.jsx';   // página de edição
 import './App.css';
@@ -29,6 +30,9 @@ function App() {
 
         {/* Rota principal: mostra a Home */}
         <Route index element={<Home />} />
+
+        {/* Nova rota para mostrar a lista de produtos */}
+        <Route path="produtos" element={<ProdutoLista />} />
 
         {/* Rota de cadastro: mostra a CadastroPage */}
         <Route path="cadastro" element={<CadastroPage/>} />
