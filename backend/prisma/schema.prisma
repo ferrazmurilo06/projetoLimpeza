@@ -9,11 +9,11 @@ datasource db {
 
 model Produto {
   id        Int     @id @default(autoincrement())
-  urlImagem String
   nome      String
-  descricao String?
   preco     Float
   categoria String
   quantidade Int
+  descricao String?
+  urlImagem String
   status    String
 }
