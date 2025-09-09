@@ -1,31 +1,107 @@
 const express = require('express');
-
 const router = express.Router();
 
-// Importando o "conector" com o banco de dados que o Prisma nos dá
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-// ROTA 1: Listar todos os produtos (GET /api/produtos)
-// Usamos async/await porque a busca no banco de dados pode demorar um pouquinho
+
+// ROTA 1: Listar todos os produtos
 router.get('/', async (req, res) => {
   try {
-    // Pedimos ao Prisma: "Encontre todos os registros na tabela Produto"
     const produtos = await prisma.produto.findMany();
     res.json(produtos);
   } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'algo deu errado no nosso servidor!' });
+  }
+});
+
+// ROTA 2: Listar um produto específico pelo ID
+router.get('/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  try {
+    const produto = await prisma.produto.findUnique({
+      where: { id: id },
+    });
+
+    if (produto) {
+      res.json(produto);
+    } else {
+      res.status(404).json({ error: 'Produto não encontrado.' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'algo deu errado no nosso servidor!' });
+  }
+});
+
+// ROTA 3: Adicionar um novo produto
+router.post('/', async (req, res) => {
+
+  const { urlImagem, nome, descricao, preco, categoria, quantidade, status } = req.body;
+
+  try {
+
+    const novoProduto = await prisma.produto.create({
+      data: {
+        urlImagem,
+        nome,
+        descricao,
+        preco,
+        categoria,
+        quantidade,
+        status,
+      },
+    });
+
+    res.status(201).json(novoProduto);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'algo deu errado no nosso servidor!' });
+  }
+});
+
+// ROTA 4: Editar um produto existente
+router.put('/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  const novosDados = req.body;
+
+  try {
+    const produtoAtualizado = await prisma.produto.update({
+      where: { id: id },
+      data: novosDados,
+    });
+    res.json(produtoAtualizado);
+  } catch (error) {
+
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: 'Produto não encontrado para edição.' });
+    }
+    console.error(error);
+    res.status(500).json({ error: 'algo deu errado no nosso servidor!' });
+  }
+});
+
+// ROTA 5: Deletar um produto
+router.delete('/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  try {
+    await prisma.produto.delete({
+      where: { id: id },
+    });
+
+    res.status(204).send();
+  } catch (error) {
+
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: 'Produto não encontrado para exclusão.' });
+    }
     console.error(error);
     res.status(500).json({ error: 'Ops, algo deu errado no nosso servidor!' });
   }
 });
 
-// ROTA 2: Listar um produto específico (GET /api/produtos/:id)
-// (Deixei o esqueleto pronto pra você ou a Duda preencherem depois!)
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  res.send(`Buscar produto com ID: ${id}`);
-});
-
-// Outras rotas (POST, PUT, DELETE) virão aqui...
-
 module.exports = router;
+
