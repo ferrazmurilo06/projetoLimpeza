@@ -1,18 +1,43 @@
 const express = require('express');
 const router = express.Router();
-
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-
-// ROTA 1: Listar todos os produtos
+// ROTA 0: Listar todos os produtos
 router.get('/', async (req, res) => {
   try {
     const produtos = await prisma.produto.findMany();
     res.json(produtos);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'algo deu errado no nosso servidor!' });
+    res.status(500).json({ error: 'Algo deu errado no nosso servidor!' });
+  }
+});
+
+// ROTA 1: Listar todos os produtos com filtros
+router.get('/', async (req, res) => {
+  // Pega os filtros que podem vir na URL (ex: /api/produtos?nome=Detergente&status=ativo)
+  const { nome, status, categoria } = req.query;
+
+  try {
+    // Cria um objeto 'where' que vai ser o nosso filtro
+    const where = {};
+    if (nome) {
+      where.nome = { contains: nome, mode: 'insensitive' }; // Busca por parte do nome, sem diferenciar maiúsculas
+    }
+    if (status) {
+      where.status = status;
+    }
+    if (categoria) {
+      where.categoria = categoria;
+    }
+
+    // Pede ao Prisma para encontrar os produtos que batem com o nosso filtro
+    const produtos = await prisma.produto.findMany({ where });
+    res.json(produtos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Algo deu errado no nosso servidor!' });
   }
 });
 
@@ -32,7 +57,7 @@ router.get('/:id', async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'algo deu errado no nosso servidor!' });
+    res.status(500).json({ error: 'Algo deu errado no nosso servidor!' });
   }
 });
 
@@ -58,7 +83,7 @@ router.post('/', async (req, res) => {
     res.status(201).json(novoProduto);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'algo deu errado no nosso servidor!' });
+    res.status(500).json({ error: 'Algo deu errado no nosso servidor!' });
   }
 });
 
@@ -79,7 +104,7 @@ router.put('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Produto não encontrado para edição.' });
     }
     console.error(error);
-    res.status(500).json({ error: 'algo deu errado no nosso servidor!' });
+    res.status(500).json({ error: 'Algo deu errado no nosso servidor!' });
   }
 });
 
@@ -99,7 +124,7 @@ router.delete('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Produto não encontrado para exclusão.' });
     }
     console.error(error);
-    res.status(500).json({ error: 'Ops, algo deu errado no nosso servidor!' });
+    res.status(500).json({ error: ' Algo deu errado no nosso servidor!' });
   }
 });
 

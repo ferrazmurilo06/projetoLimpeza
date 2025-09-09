@@ -8,12 +8,25 @@ datasource db {
 }
 
 model Produto {
-  id        Int     @id @default(autoincrement())
-  nome      String
-  preco     Float
-  categoria String
+  id         Int     @id @default(autoincrement())
+  nome       String
+  preco      Float
+  categoria  String
   quantidade Int
+  descricao  String? 
+  urlImagem  String
+  status     String
+}
+
+model User {
+  id    Int    @id @default(autoincrement())
+  nome  String
+  email String @unique
+  senha String
+}
+
+model Categoria {
+  id        Int     @id @default(autoincrement())
+  nome      String  @unique 
   descricao String?
-  urlImagem String
-  status    String
 }
