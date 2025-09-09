@@ -1,36 +1,18 @@
 // src/pages/Home.jsx
 
 import React from "react";
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Typography, Container, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar.jsx";
-import "../components/bubbles.css"; 
-import ProdutoLista from "./ProdutoLista";
+import "../components/bubbles.css";
 
-
-function home() {
+function Home() {
   return (
     <>
-      {/* {barra do munu glass} */}
+      {/* Navbar */}
       <Navbar />
-      <div className="bubbles">
-  {[...Array(25)].map((_, i) => (
-    <div
-  key={i}
-  className="bubble"
-  style={{
-    left: `${Math.random() * 100}%`,
-    width: `${25 + Math.random() * 25}px`,
-    animationDuration: `${6 + Math.random() * 8}s`,
-    animationDelay: `${Math.random() * 4}s`,
-  }}
-/>
 
-  ))}
-</div>
-
-
-
-      {/* IMAGEM DE FUNDO MAIS TEXTO CENTRALIZADO*/}
+      {/* Fundo com imagem + título + botão */}
       <Box
         sx={{
           height: "100vh",
@@ -46,16 +28,14 @@ function home() {
           pt: "80px", // espaço para a navbar fixa
         }}
       >
-    
-      
-        {/* Bolhas */}
+        {/* Bolhas animadas */}
         <div className="bubbles">
           {[...Array(7)].map((_, i) => (
             <div key={i} className="bubble" />
           ))}
         </div>
 
-        {/* Conteúdo */}
+        {/* Conteúdo central */}
         <Container sx={{ zIndex: 2, position: "relative" }}>
           <Typography
             variant="h3"
@@ -70,27 +50,39 @@ function home() {
           </Typography>
 
           <Typography
-  variant="h6"
-  sx={{
-    textShadow: "1px 1px 3px rgba(0,0,0,0.5)",
-    fontFamily: "'Asap', sans-serif",
-    "&.MuiTypography-h6": { // Afeta apenas este elemento
-      color: "#FFFFFF",
-    },
-  }}
->
-  Catálogo de Sabonetes Líquidos
-</Typography>
-        </Container>
-      </Box>
-   {/* Produtos cadastrados */}
-      <Box sx={{ py: 6, backgroundColor: " #e3f2fd" }}>
-        <Container>
-          <ProdutoLista />
+            variant="h6"
+            sx={{
+              textShadow: "1px 1px 3px rgba(0,0,0,0.5)",
+              fontFamily: "'Asap', sans-serif",
+              "&.MuiTypography-h6": {
+                color: "#FFFFFF",
+              },
+              mb: 4,
+            }}
+          >
+            Catálogo de Sabonetes Líquidos
+          </Typography>
+
+          {/* Botão de login */}
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                fontWeight: "bold",
+                px: 4,
+                py: 1.5,
+                borderRadius: "12px",
+                textTransform: "none",
+              }}
+            >
+              Fazer Login
+            </Button>
+          </Link>
         </Container>
       </Box>
     </>
   );
 }
 
-export default home;
+export default Home;
