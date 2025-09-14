@@ -1,23 +1,26 @@
-const API_URL = 'https://687d3629918b6422433149ca.mockapi.io/Produtos/Produtos';
+// src/services/apiService.js
+
+const API_URL = 'http://localhost:3000/api'; // Removido a barra extra no final para evitar //
 
 // 1. buscar todos os produtos
 export async function buscarProdutos() {
   try {
-    const response = await fetch(API_URL);
+    const response = await fetch(`${API_URL}/produtos`);
     if (!response.ok) {
       throw new Error('A resposta da rede não foi boa');
     }
     const data = await response.json();
     
+    // Mapeia os dados da API para o formato esperado pelo seu frontend
     return data.map(item => ({
       id: item.id,
       nome: item.nome || 'Nome não informado',
       preco: Number(item.preco) || 0,
       categoria: item.categoria || 'Sem categoria',
       descricao: item.descricao || '',
-      estoque: Number(item.estoque) || 0,
-      imagem: item.imagem || 'https://placehold.co/400x400/CCCCCC/FFFFFF?text=Sem+Imagem',
-      disponivel: item.disponivel !== false 
+      quantidade: Number(item.quantidade) || 0, // Usando "quantidade" para o estoque
+      urlImagem: item.urlImagem || 'https://placehold.co/400x400/CCCCCC/FFFFFF?text=Sem+Imagem', // Usando "urlImagem"
+      status: item.status !== false
     }));
   } catch (error) {
     console.error('Erro ao buscar produtos:', error);
@@ -28,7 +31,7 @@ export async function buscarProdutos() {
 // 2. buscar o produto pelo ID
 export async function buscarProdutoPorId(id) {
   try {
-    const response = await fetch(`${API_URL}/${id}`);
+    const response = await fetch(`${API_URL}/produtos/${id}`);
     if (!response.ok) {
       throw new Error('Produto não encontrado');
     }
@@ -41,9 +44,9 @@ export async function buscarProdutoPorId(id) {
       preco: Number(item.preco) || 0,
       categoria: item.categoria || 'Sem categoria',
       descricao: item.descricao || '',
-      estoque: Number(item.estoque) || 0,
-      imagem: item.imagem || 'https://placehold.co/400x400/CCCCCC/FFFFFF?text=Sem+Imagem',
-      disponivel: item.disponivel !== false
+      quantidade: Number(item.quantidade) || 0, // Usando "quantidade" para o estoque
+      urlImagem: item.urlImagem || 'https://placehold.co/400x400/CCCCCC/FFFFFF?text=Sem+Imagem', // Usando "urlImagem"
+      status: item.status !== false
     };
   } catch (error) {
     console.error(`Erro ao buscar produto com ID ${id}:`, error);
@@ -54,7 +57,7 @@ export async function buscarProdutoPorId(id) {
 // 3. CADASTRAR um novo produto
 export async function adicionarProduto(produto) {
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(`${API_URL}/produtos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       
@@ -63,9 +66,8 @@ export async function adicionarProduto(produto) {
         preco: parseFloat(produto.preco),
         categoria: produto.categoria,
         descricao: produto.descricao,
-        estoque: parseInt(produto.estoque),
-        imagem: produto.imagem,
-        disponivel: produto.disponivel
+        quantidade: parseInt(produto.quantidade), // Usando "quantidade" para o estoque
+        urlImagem: produto.urlImagem // Usando "urlImagem"
       })
     });
     
@@ -82,18 +84,16 @@ export async function adicionarProduto(produto) {
 // 4. ATUALIZAR um produto
 export async function atualizarProduto(id, produto) {
   try {
-    const response = await fetch(`${API_URL}/${id}`, {
+    const response = await fetch(`${API_URL}/produtos/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      // Envia apenas os campos que o nosso projeto usa
       body: JSON.stringify({
         nome: produto.nome,
         preco: parseFloat(produto.preco),
         categoria: produto.categoria,
         descricao: produto.descricao,
-        estoque: parseInt(produto.estoque),
-        imagem: produto.imagem,
-        disponivel: produto.disponivel
+        quantidade: parseInt(produto.quantidade), // Usando "quantidade" para o estoque
+        urlImagem: produto.urlImagem // Usando "urlImagem"
       })
     });
     
@@ -110,7 +110,7 @@ export async function atualizarProduto(id, produto) {
 // 5. DELETAR um produto
 export async function deletarProduto(id) {
   try {
-    const response = await fetch(`${API_URL}/${id}`, {
+    const response = await fetch(`${API_URL}/produtos/${id}`, {
       method: 'DELETE'
     });
     

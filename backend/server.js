@@ -1,6 +1,10 @@
 const express = require('express');
+const cors = require('cors'); // Verifique se esta linha está aqui
+
 const app = express();
 app.use(express.json());
+app.use(cors()); // Esta linha é crucial para permitir a comunicação
+
 const PORTA = 3000;
 
 const produtosRouter = require('./routes/produtos.routes.js');
@@ -12,5 +16,5 @@ app.use('/api/users', usersRouter);
 app.use('/api/categorias', categoriasRouter);
 
 app.listen(PORTA, () => {
-  console.log(`Servidor rodando na porta http://localhost:${PORTA}`);
+  console.log(`Servidor rodando na porta http://localhost:${PORTA}`);
 });

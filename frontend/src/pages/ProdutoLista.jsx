@@ -1,5 +1,3 @@
-// src/pages/ProdutoLista.jsx
-
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardMedia, Typography, Button, Grid, Container, Box, CircularProgress, Alert } from "@mui/material";
@@ -23,10 +21,7 @@ const ProdutoLista = () => {
     try {
       setLoading(true);
       const produtosDaApi = await buscarProdutos();
-      const idsDaApi = new Set(produtosDaApi.map(p => p.id));
-      const produtosExtrasFiltrados = produtosLocaisExtras.filter(p => !idsDaApi.has(String(p.id)));
-      const listaCompleta = [...produtosDaApi, ...produtosExtrasFiltrados];
-      setProdutos(listaCompleta);
+      setProdutos(produtosDaApi);
       setError(null);
     } catch (err) {
       setError("Falha ao conectar com a API. Exibindo lista de demonstração.");
@@ -110,7 +105,7 @@ const ProdutoLista = () => {
               }}>
                 <CardMedia
                   component="img"
-                  image={produto.imagem}
+                  image={produto.urlImagem}
                   alt={produto.nome}
                   sx={{
                     objectFit: "contain",
@@ -137,17 +132,17 @@ const ProdutoLista = () => {
                     <strong>Categoria:</strong> {produto.categoria}
                   </Typography>
                   <Typography variant="body2" textAlign="center">
-                    <strong>Estoque:</strong> {produto.estoque}
+                    <strong>Estoque:</strong> {produto.quantidade}
                   </Typography>
                   <Typography
                     variant="body2"
                     textAlign="center"
                     sx={{
-                      color: produto.estoque > 0 ? "green" : "red",
+                      color: produto.quantidade > 0 ? "green" : "red",
                       fontWeight: 'bold'
                     }}
                   >
-                    {produto.estoque > 0 ? "Disponível" : "Indisponível"}
+                    {Number(produto.quantidade) > 0 ? "Disponível" : "Indisponível"}
                   </Typography>
                 </CardContent>
                 <Box sx={{ p: 2, display: 'flex', gap: '10px', justifyContent: 'center' }}>
