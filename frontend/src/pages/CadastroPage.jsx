@@ -29,9 +29,9 @@ function CadastroPage() {
       preco: parseFloat(preco),
       categoria,
       descricao,
-      estoque: parseInt(estoque) || 0,
-      imagem: imagem || `https://placehold.co/400x400/CCCCCC/FFFFFF?text=${encodeURIComponent(nome)}`,
-      disponivel: parseInt(estoque) > 0,
+      quantidade: parseInt(estoque) || 0,
+      urlImagem: imagem || `https://placehold.co/400x400/CCCCCC/FFFFFF?text=${encodeURIComponent(nome)}`,
+      status: parseInt(estoque) > 0 ? 'ativo' : 'inativo',
     };
 
     try {

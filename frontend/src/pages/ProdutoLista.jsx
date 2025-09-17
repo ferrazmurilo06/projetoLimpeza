@@ -4,13 +4,7 @@ import { Card, CardContent, CardMedia, Typography, Button, Grid, Container, Box,
 import { buscarProdutos, deletarProduto } from '../services/apiService.js';
 import './ProdutoLista.css';
 
-const produtosLocaisExtras = [
-  { id: 3, nome: "Sabonete Palmolive Golfinho", preco: 14.9, categoria: "Higiene", estoque: 8, descricao: "Aroma suave de maresia e ilustração de um golfinho saltando.", imagem: "/images/Produto1.jpg", disponivel: true },
-  { id: 4, nome: "Sabonete Softsoap Panda", preco: 11.9, categoria: "Higiene", estoque: 0, descricao: "Fragrância delicada com estampa de Panda.", imagem: "/images/Produto5.jpg", disponivel: false },
-  { id: 5, nome: "Sabonete Palmolive Arara", preco: 15.0, categoria: "Higiene", estoque: 4, descricao: "Textura leve e embalagem divertida com uma Arara.", imagem: "/images/produto4 (2).jpg", disponivel: true },
-  { id: 6, nome: "Sabonete Palmolive Peixe Preto", preco: 10.9, categoria: "Higiene", estoque: 10, descricao: "Com extrato de algas e ilustração de Peixe Preto.", imagem: "/images/Produto9.webp", disponivel: true },
-  { id: 7, nome: "Sabonete Palmolive Nemo", preco: 13.5, categoria: "Higiene", estoque: 6, descricao: "Com cheirinho cítrico e ilustração do peixe-palhaço.", imagem: "/images/Produto3.jpg", disponivel: true }
-];
+
 
 const ProdutoLista = () => {
   const [produtos, setProdutos] = useState([]);

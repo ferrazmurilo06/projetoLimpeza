@@ -67,7 +67,8 @@ export async function adicionarProduto(produto) {
         categoria: produto.categoria,
         descricao: produto.descricao,
         quantidade: parseInt(produto.quantidade), // Usando "quantidade" para o estoque
-        urlImagem: produto.urlImagem // Usando "urlImagem"
+        urlImagem: produto.urlImagem, // Usando "urlImagem"
+        status: produto.status 
       })
     });
     
