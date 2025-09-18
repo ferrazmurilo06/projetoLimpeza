@@ -1,7 +1,8 @@
-import React from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar.jsx'; // Navbar
-import Home from './pages/home.jsx';             // Home
+import React, { useContext } from 'react'; // Importa useContext
+import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { AuthContext } from './context/AuthContext.jsx'; // Importa o contexto
+import Navbar from '@/components/Navbar/Navbar.jsx';
+import Home from './pages/home.jsx';                // Home
 import ProdutoLista from './pages/ProdutoLista.jsx'; // Importe a página de lista de produtos
 import CadastroPage from './pages/CadastroPage.jsx'; // página de cadastro
 import EdicaoPage from './pages/EdicaoPage.jsx';     // página de edição
@@ -14,7 +15,6 @@ function Layout() {
     <div>
       <Navbar />
       <main>
-        {/* espaço pra carregar a página da rota atual */}
         <Outlet />
       </main>
     </div>
@@ -23,26 +23,23 @@ function Layout() {
 
 // regras da navegação
 function App() {
+  const { isLoggedIn } = useContext(AuthContext); // Pega o estado de login
+
   return (
     <Routes>
-      {/* Todas as rotas dentro daqui usarão o <Layout> como base */}
       <Route path="/" element={<Layout />}>
-
-        {/* Rota principal: mostra a Home */}
         <Route index element={<Home />} />
-
-        {/* Rota para mostrar a lista de produtos */}
-        <Route path="produtos" element={<ProdutoLista />} />
-
-        {/* Rota de cadastro: mostra a CadastroPage */}
-        <Route path="cadastro" element={<CadastroPage/>} />
-        
-        {/* Rota de edição: mostra a EdicaoPage */}
-        <Route path="editar/:id" element={<EdicaoPage />} />
-
-        {/* Rota de login */}
         <Route path="login" element={<LoginPage />} />
-        
+
+        <Route 
+          path="produtos" 
+          element={isLoggedIn ? <ProdutoLista /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="cadastro" 
+          element={isLoggedIn ? <CadastroPage/> : <Navigate to="/login" />}
+        />
+        <Route path="editar/:id" element={<EdicaoPage />} />
       </Route>
     </Routes>
   );
