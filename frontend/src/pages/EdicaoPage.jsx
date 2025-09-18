@@ -12,9 +12,9 @@ function EdicaoPage() {
     nome: '',
     preco: '',
     categoria: '', 
-    estoque: '',
+    quantidade: '',
     descricao: '',
-    imagem: '', 
+    urlImagem: '', 
   });
 
   // Estados para controlar o carregamento e erros
@@ -126,9 +126,9 @@ function EdicaoPage() {
         />
         <TextField
           label="Quantidade em Estoque"
-          name="estoque"
+          name="quantidade"
           type="number"
-          value={produto.estoque}
+          value={produto.quantidade}
           onChange={handleChange}
           fullWidth
           size="small"
@@ -146,8 +146,8 @@ function EdicaoPage() {
         />
         <TextField
           label="URL da Imagem"
-          name="imagem"
-          value={produto.imagem}
+          name="urlImagem"
+          value={produto.urlImagem}
           onChange={handleChange}
           fullWidth
           required
