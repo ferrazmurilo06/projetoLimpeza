@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { TextField, Button, Box, Typography, Container, CircularProgress, Alert, Stack } from '@mui/material';
-// Importando as funções do serviço de API
+
 import { buscarProdutoPorId, atualizarProduto } from '../services/apiService.js';
 
 function EdicaoPage() {
-  const { id } = useParams(); // Pega o ID da URL
+  const { id } = useParams(); 
   const navigate = useNavigate();
 
   const [produto, setProduto] = useState({
@@ -17,11 +17,11 @@ function EdicaoPage() {
     urlImagem: '', 
   });
 
-  // Estados para controlar o carregamento e erros
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Efeito que busca os dados do produto na API quando a página carrega
+ 
   useEffect(() => {
     const carregarProduto = async () => {
       try {
@@ -41,22 +41,22 @@ function EdicaoPage() {
     };
 
     carregarProduto();
-  }, [id]); // Roda de novo se o ID na URL mudar
+  }, [id]); 
 
-  // Função que atualiza o estado conforme o usuário digita
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProduto((prev) => ({ ...prev, [name]: value }));
   };
 
-  // envia as alterações para a API
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       await atualizarProduto(id, produto);
       alert('Produto atualizado com sucesso!');
-      navigate('/'); // Volta para a página principal
+      navigate('/produtos'); 
     } catch (err) {
       alert('Erro ao atualizar o produto.');
       console.error(err);
@@ -65,12 +65,12 @@ function EdicaoPage() {
     }
   };
 
-  // Se estiver carregando, mostra um indicador
+  
   if (loading) {
     return <Box sx={{ display: 'flex', justifyContent: 'center', mt: 12 }}><CircularProgress /></Box>;
   }
 
-  // Se der erro, mostra uma mensagem
+ 
   if (error) {
     return <Container sx={{ mt: 12 }}><Alert severity="error">{error}</Alert></Container>;
   }

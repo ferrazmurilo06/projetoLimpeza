@@ -20,7 +20,6 @@ const ProdutoLista = () => {
     } catch (err) {
       setError("Falha ao conectar com a API. Exibindo lista de demonstração.");
       console.error("Erro da API, usando fallback:", err);
-      setProdutos(produtosLocaisExtras);
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,3 @@
-// src/pages/Home.jsx
-
 import React from "react";
 import { Box, Typography, Container, Button } from "@mui/material";
 import { Link } from "react-router-dom";

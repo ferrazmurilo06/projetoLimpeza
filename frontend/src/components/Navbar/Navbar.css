@@ -19,7 +19,7 @@
   font-size: 1.7rem;
   font-weight: bold;
   font-family: 'Asap', sans-serif;
-  color: #ffffff;
+  color: #1e88e5;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   letter-spacing: 0.7px;
   transition: color 0.3s ease;
@@ -31,12 +31,13 @@
   gap: 28px;
   margin: 0;
   padding: 0;
+  align-items: center;
 }
 
 .nav-links li {
   font-family: 'Asap', sans-serif;
   font-weight: 500;
-  font-size: 0.98rem;
+  font-size: 1.40rem;
   cursor: pointer;
   padding: 6px 12px;
   border-radius: 4px;
@@ -138,6 +139,6 @@
   display: none;
 }
 .navbar .nav-links a {
-  color: #fff;
+  color: #1e88e5;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
